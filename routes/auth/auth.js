@@ -1,6 +1,8 @@
 import login from "../../function/auth/login.js";
 import refreshToken from "../../function/auth/refreshToken.js";
 import express from 'express';
+import authenticateToken from '../../middleware/jwtAuth.js';
+
 
 const router = express.Router();
 
@@ -39,7 +41,13 @@ router.post('/refresh', async (req, res) => {
       error: result.error,
     })
   }
-})
+});
+
+router.post('/verifyToken', authenticateToken, async (req, res) => {
+  return res.status(200).json({
+    status: 'success',
+  })
+});
 
 
 export default router;

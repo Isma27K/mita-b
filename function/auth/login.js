@@ -10,10 +10,10 @@ const login = (uname, password) => {
 
         return { accessToken, refreshToken };
       }else{
-        return "unauthorized";
+        return "wrong password";
       }
     }else{
-      return "unauthorized";
+      return "password empty";
     }
   }
   catch(err){

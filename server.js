@@ -61,7 +61,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // =================================== WHERE API ROUTES START =====================================================
 
-app.get('/', (req, res) => {
+app.get('/api/v1/message', (req, res) => {
   res.jsonp({message: "Hello, from izz"});
 });
 
@@ -69,9 +69,17 @@ app.get('/', (req, res) => {
 app.use("/api/v1", login);
 
 
-// =================================== 404 Not Found Handler ========================================
-app.use((req, res) => {
-  res.status(404).json({ message: 'Route Not Found' });
-});
+// =================================== 404 Not Found Handler (dev only) ========================================
+
+if(process.env.PROJECT_STATUS === 'dev') {
+  app.use((req, res) => {
+    res.status(404).json({ message: 'Route Not Found' });
+  });
+}else{
+  // Catch-all route to handle other paths (will not send any response)
+  app.use((req, res) => {
+    // Do nothing, no response sent
+  });
+}
 
 export default app;
